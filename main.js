@@ -58,6 +58,28 @@ class Field {
       this.state.replay = true;
     }
   }
+  static generateField(height, width, holePercent) {
+    const newField = [];
+    for (let i = 0; i < height; i++) {
+      newField[i] = [];
+      for (let j = 0; j < width; j++) {
+        newField[i][j] = fieldCharacter;
+      }
+    }
+    let holeCounter = 0;
+    let holeLimit = (width * height * holePercent) / 100;
+    while (holeCounter < holeLimit) {
+      newField[Math.ceil(Math.random() * (height - 1))][
+        Math.ceil(Math.random() * (width - 1))
+      ] = hole;
+      holeCounter += 1;
+    }
+    newField[Math.ceil(Math.random() * (height - 1))][
+      Math.ceil(Math.random() * (width - 1))
+    ] = hat;
+    newField[0][0] = pathCharacter;
+    return newField;
+  }
   render() {
     while (this.state.replay) {
       this.currentLocationUpdater();
@@ -69,5 +91,7 @@ class Field {
     }
   }
 }
+
 const field = new Field();
-field.render();
+// field.render();
+console.log(Field.generateField(5, 6, 30));
